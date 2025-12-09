@@ -44,13 +44,9 @@ public class MainWindow extends javax.swing.JFrame {
      * Creates new form MainWindow
      */
     public MainWindow() {
-        System.out.println("DEBUG: MainWindow constructor started");
         appIcon = new ImageIcon(getClass().getResource("/me/guoyunhe/fontweak/img/icon-256.png"));
-        System.out.println("DEBUG: appIcon initialized");
         sysfonts = new SystemFontList();
-        System.out.println("DEBUG: sysfonts initialized");
         fontconfig = new FontConfig();
-        System.out.println("DEBUG: fontconfig initialized");
         matchListModel = new DefaultListModel<>();
         fontListModel = new DefaultListModel<>();
         aliasTableModel = new DefaultTableModel(
@@ -69,12 +65,8 @@ public class MainWindow extends javax.swing.JFrame {
             }
         };
 
-        System.out.println("DEBUG: Models initialized");
         initComponents();
-        System.out.println("DEBUG: initComponents finished");
         loadConfig();
-        System.out.println("DEBUG: loadConfig finished");
-        System.out.println("DEBUG: MainWindow constructor finished");
     }
 
     private void loadConfig() {
@@ -733,7 +725,6 @@ public class MainWindow extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        System.out.println("DEBUG: main started");
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -751,13 +742,11 @@ public class MainWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        System.out.println("DEBUG: L&F set");
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                System.out.println("DEBUG: Invoking MainWindow constructor");
                 try {
                     new MainWindow().setVisible(true);
                 } catch (Throwable t) {
