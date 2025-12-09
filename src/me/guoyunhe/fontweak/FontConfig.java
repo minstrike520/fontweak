@@ -227,6 +227,7 @@ public class FontConfig {
             if (!alias.isEmpty()) {
                 aliasList.add(alias);
             }
+            root.removeChild(element);
         }
     }
 

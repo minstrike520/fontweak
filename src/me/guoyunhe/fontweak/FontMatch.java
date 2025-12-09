@@ -96,7 +96,7 @@ public class FontMatch {
         }
 
         if (!isEmpty()) {
-            node.getParentNode().removeChild(node);
+            // Node removal handled by FontConfig
         }
     }
 
