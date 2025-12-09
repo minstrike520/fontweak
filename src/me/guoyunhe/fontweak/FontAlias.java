@@ -57,8 +57,6 @@ public class FontAlias {
         this.family = element.getElementsByTagName("family").item(0).getTextContent();
         Element preferElement = (Element) element.getElementsByTagName("prefer").item(0);
         this.prefer = preferElement.getElementsByTagName("family").item(0).getTextContent();
-
-        element.getParentNode().removeChild(element);
     }
 
     /**

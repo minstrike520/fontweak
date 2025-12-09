@@ -103,8 +103,7 @@ public class FontMatch {
         }
 
         if (!isEmpty()) {
-            System.out.println("DEBUG: FontMatch.parseDOM - removing node from parent");
-            node.getParentNode().removeChild(node);
+            // Node removal handled by FontConfig
         }
         System.out.println("DEBUG: FontMatch.parseDOM finished");
     }
