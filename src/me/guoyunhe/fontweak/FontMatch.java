@@ -60,25 +60,33 @@ public class FontMatch {
      * @param node The XML node to be analyzed.
      */
     public void parseDOM(Node node) {
+        System.out.println("DEBUG: FontMatch.parseDOM started for node: " + node.getNodeName());
         this.familyEdit = null;
         this.familyTest = null;
         this.langTest = null;
 
         NodeList children = node.getChildNodes();
+        System.out.println("DEBUG: FontMatch.parseDOM - processing " + children.getLength() + " children");
         for (int i = 0; i < children.getLength(); i++) {
-            if (children.item(i).hasAttributes()) {
-                Element child = (Element) children.item(i);
+            Node currentChildNode = children.item(i);
+            System.out.println("DEBUG: FontMatch.parseDOM - child " + i + ": " + currentChildNode.getNodeName());
+            if (currentChildNode.hasAttributes()) {
+                Element child = (Element) currentChildNode;
                 String nodeName = child.getNodeName();
                 String name = child.getAttribute("name");
+                System.out.println("DEBUG: FontMatch.parseDOM - child element: " + nodeName + " name: " + name);
                 List<String> stringList = new ArrayList<String>();
                 NodeList grandChildren = child.getChildNodes();
+                System.out.println("DEBUG: FontMatch.parseDOM - processing " + grandChildren.getLength() + " grandchildren");
 
                 for (int j = 0; j < grandChildren.getLength(); j++) {
                     Node grandChild = grandChildren.item(j);
+                    System.out.println("DEBUG: FontMatch.parseDOM - grandchild " + j + ": " + grandChild.getNodeName());
                     if(grandChild.getNodeName().equals("string")) {
                         stringList.add(grandChild.getTextContent());
                     }
                 }
+                System.out.println("DEBUG: FontMatch.parseDOM - finished processing grandchildren");
 
                 if (nodeName.equals("test")) {
                     if (name.equals("family")) {
@@ -95,8 +103,10 @@ public class FontMatch {
         }
 
         if (!isEmpty()) {
+            System.out.println("DEBUG: FontMatch.parseDOM - removing node from parent");
             node.getParentNode().removeChild(node);
         }
+        System.out.println("DEBUG: FontMatch.parseDOM finished");
     }
 
     /**

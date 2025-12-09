@@ -126,10 +126,14 @@ public class FontConfig {
      * Read fontconfig configuration file (XML).
      */
     public void readConfig() {
+        System.out.println("DEBUG: FontConfig.readConfig started");
+        System.out.println("DEBUG: parsing file: " + file.getAbsolutePath());
         // Parse DOM
         try {
             doc = builder.parse(file);
+            System.out.println("DEBUG: DOM parsed successfully");
         } catch (SAXException ex) {
+            System.out.println("DEBUG: SAXException during parse");
             Logger.getLogger(FontConfig.class.getName()).log(Level.SEVERE, null, ex);
             // Copy default config file if the XML file is invalid
             InputStream in = getClass().getResourceAsStream("/me/guoyunhe/fontweak/config/default.conf");
@@ -137,15 +141,27 @@ public class FontConfig {
                 file.delete();
                 Files.copy(in, file.toPath()); // Copty default config file
                 doc = builder.parse(file);
+                System.out.println("DEBUG: Default config parsed");
             } catch (IOException | SAXException ex1) {
                 Logger.getLogger(FontConfig.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } catch (IOException ex) {
+            System.out.println("DEBUG: IOException during parse");
             Logger.getLogger(FontConfig.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Read elements
+        System.out.println("DEBUG: getting root element");
+        if (doc == null) {
+             System.out.println("DEBUG: doc is null!");
+             return;
+        }
         root = (Element) doc.getElementsByTagName("fontconfig").item(0);
+        if (root == null) {
+            System.out.println("DEBUG: root element 'fontconfig' not found");
+            return;
+        }
+        System.out.println("DEBUG: getting child elements");
         NodeList matchElements = root.getElementsByTagName("match");
         NodeList aliasElements = root.getElementsByTagName("alias");
 
@@ -164,6 +180,7 @@ public class FontConfig {
         /* When parsing DOM, nodes in matchElements list will be removed one by
          * one. So here we use while loop other than for loop.
         */
+        System.out.println("DEBUG: parsing matches");
         while (matchElements.getLength() > 0) {
             Element element;
 
@@ -188,8 +205,11 @@ public class FontConfig {
                         }
                     }
                 }
+                // Ensure the element is removed from the live NodeList to prevent infinite loop
+                root.removeChild(element);
             }
         }
+        System.out.println("DEBUG: matches parsed");
 
         if (this.sansMatch == null) {
             this.sansMatch = new FontMatch("sans-serif", null, null);
@@ -209,6 +229,7 @@ public class FontConfig {
         /* When parsing DOM, nodes in aliasElements list will be removed one by
          * one. So here we use while loop other than for loop.
         */
+        System.out.println("DEBUG: parsing aliases");
         while (aliasElements.getLength() > 0) {
             Element element;
             FontAlias alias;
@@ -220,6 +241,8 @@ public class FontConfig {
                 aliasList.add(alias);
             }
         }
+        System.out.println("DEBUG: aliases parsed");
+        System.out.println("DEBUG: FontConfig.readConfig finished");
     }
 
     /**
